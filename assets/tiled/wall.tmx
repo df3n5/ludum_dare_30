@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="14" height="14" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="background" tilewidth="32" tileheight="32">
+  <image source="tilesheet.png" width="640" height="480"/>
+ </tileset>
+ <layer name="background" width="14" height="14">
+  <properties>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKAuYIFiZDayGCn6GBhG9VGqD139YNWHjU2sfaToIwQAd/8A+Q==
+  </data>
+ </layer>
+ <layer name="death_layer" width="14" height="14">
+  <properties>
+   <property name="collidekill" value="true"/>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYCAfiGLByHKU6kM3Y1Qf6fqQ1Q9mfZT4D5c+cgAAjC4Guw==
+  </data>
+ </layer>
+ <layer name="collidable" width="14" height="14">
+  <properties>
+   <property name="collide" value="true"/>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwTY2BgECMTkwpG9Y3qo6c+cjAA5BoEeQ==
+  </data>
+ </layer>
+ <objectgroup name="letter" width="14" height="14">
+  <object type="letter_t" x="384" y="384" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="player" width="14" height="14">
+  <object x="208" y="48" width="6" height="7"/>
+ </objectgroup>
+ <objectgroup name="death_wall" width="14" height="14">
+  <object x="0" y="2" height="32"/>
+ </objectgroup>
+</map>

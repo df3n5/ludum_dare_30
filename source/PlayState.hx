@@ -26,11 +26,13 @@ class PlayState extends FlxState {
     public var portals:FlxGroup;
     public var gravitys:FlxGroup;
     public var letters:FlxGroup;
+    public var deathWalls:FlxGroup;
     var level:Level;
     public var bullets:FlxGroup;
     public static var letterMGot = false;
     public static var letterAGot = false;
     public static var letterSGot = false;
+    public static var letterTGot = false;
     var crazyStrobe:Bool;
     var crazyStrobeTween:ColorTween;
 
@@ -62,7 +64,7 @@ class PlayState extends FlxState {
                 crazyStrobe = true;
                 crazyStrobeTween = FlxTween.color(1.0, 0xff0ff0, 0x000000, 0, 1, { type: FlxTween.PINGPONG});
             case Level.WallL:
-                throw "No Level defined";
+                loadTiledLevel("assets/tiled/wall.tmx");
         }
     }
 
@@ -71,6 +73,7 @@ class PlayState extends FlxState {
         gravitys = new FlxGroup();
         bullets = new FlxGroup();
         letters = new FlxGroup();
+        deathWalls = new FlxGroup();
         add(gravitys);
         add(portals);
         add(bullets);
@@ -84,9 +87,11 @@ class PlayState extends FlxState {
         portals.update();
         bullets.update();
         letters.update();
+        deathWalls.update();
         FlxG.collide(player, portals, playerPortalCollide);
         FlxG.overlap(bullets, gravitys, bulletGravityCollide);
         FlxG.overlap(player, letters, playerLetterCollide);
+        FlxG.collide(player, deathWalls);
         tiledLevel.collideKillWithLevel(player, playerLevelCollide);
         tiledLevel.collideWithLevel(player);
         tiledLevel.collideWithLevel(bullets, levelBulletCollide);
@@ -147,6 +152,8 @@ class PlayState extends FlxState {
                 letterAGot = true;
             case LS:
                 letterSGot = true;
+            case LT:
+                letterTGot = true;
         }
         FlxG.switchState(new PlayState(PortalL));
     }

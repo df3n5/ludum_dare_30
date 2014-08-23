@@ -10,6 +10,7 @@ enum LetterType {
     LM;
     LA;
     LS;
+    LT;
 }
 
 class Letter extends FlxSprite {
@@ -24,6 +25,8 @@ class Letter extends FlxSprite {
                 loadGraphic("assets/images/letter_a.png");
             case LS:
                 loadGraphic("assets/images/letter_s.png");
+            case LT:
+                loadGraphic("assets/images/letter_t.png");
         }
     }
 }
