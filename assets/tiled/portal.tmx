@@ -11,4 +11,7 @@
    eJylzkkKwDAMQ1Gno+9/4raLQhBWpLSLjzdGvBYRzWgze34Xo9Wo3/vrq/a++kZ7sz5nz/XN7Ckf29vvDnL7TijJZXtYFrl7VehjTuUa+SqncikfOpXL8SXsOSnf2wVQVATj
   </data>
  </layer>
+ <objectgroup name="player" width="20" height="14">
+  <object x="313" y="216" width="17" height="18"/>
+ </objectgroup>
 </map>

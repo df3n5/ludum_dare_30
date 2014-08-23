@@ -93,15 +93,20 @@ class TiledLevel extends TiledMap {
 		switch (o.type.toLowerCase()) {
             default:
                 return;
-            /*
-			case "bunker":
+			case "player":
+                var player:Player = new Player(x, y);
+                //var player:Player = new Player(100, 100);
+                state.add(player);
+                state.player = player;
+                state.add(player.gun);
+                /*
                 var bunker:FlxSprite = new FlxSprite(x, y, "assets/images/bunker.png");
                 bunker.immovable = true;
                 bunker.health = 1.0;
                 state.bunkers.add(bunker);
                 state.add(bunker);
                 state.spawnPoints.add(new SpawnPoint(bunker, new FlxPoint(bunker.x+100, bunker.y+100)));
-            */
+                */
 		}
 	}
 	
