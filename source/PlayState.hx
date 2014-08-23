@@ -8,6 +8,8 @@ import flixel.FlxObject;
 import flixel.text.FlxText;
 import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
+import flixel.tweens.misc.ColorTween;
+import flixel.tweens.FlxTween;
 
 enum Level {
     PortalL;
@@ -28,10 +30,14 @@ class PlayState extends FlxState {
     public var bullets:FlxGroup;
     public static var letterMGot = false;
     public static var letterAGot = false;
+    public static var letterSGot = false;
+    var crazyStrobe:Bool;
+    var crazyStrobeTween:ColorTween;
 
     public function new(level:Level):Void {
         super();
         this.level = level;
+        crazyStrobe = false;
     }
 
     function loadTiledLevel(path:String) {
@@ -52,7 +58,9 @@ class PlayState extends FlxState {
                 loadTiledLevel("assets/tiled/reverse.tmx");
                 player.reversed = true;
             case Level.StrobeL:
-                throw "No Level defined";
+                loadTiledLevel("assets/tiled/strobe.tmx");
+                crazyStrobe = true;
+                crazyStrobeTween = FlxTween.color(1.0, 0xff0ff0, 0x000000, 0, 1, { type: FlxTween.PINGPONG});
             case Level.WallL:
                 throw "No Level defined";
         }
@@ -67,6 +75,8 @@ class PlayState extends FlxState {
         add(portals);
         add(bullets);
         loadLevel(level);
+        //FlxG.camera.color = 0xFF0000;
+        //FlxG.camera.alpha = 0.5;
     }
 
     override public function update():Void {
@@ -82,6 +92,10 @@ class PlayState extends FlxState {
         tiledLevel.collideWithLevel(bullets, levelBulletCollide);
         if(FlxG.mouse.justPressed) {
             fireGun();
+        }
+        if(crazyStrobeTween != null) {
+            FlxG.camera.color = crazyStrobeTween.color;
+//            FlxG.camera.alpha = crazyStrobeTween.alpha;
         }
     }
 
@@ -131,6 +145,8 @@ class PlayState extends FlxState {
                 letterMGot = true;
             case LA:
                 letterAGot = true;
+            case LS:
+                letterSGot = true;
         }
         FlxG.switchState(new PlayState(PortalL));
     }
