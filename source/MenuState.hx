@@ -11,7 +11,7 @@ import flixel.tweens.FlxTween;
 
 class MenuState extends FlxState {
     override public function create():Void {
-        var title = new FlxSprite(0, 0, "assets/images/Startscreen.png");
+        var title = new FlxSprite(0, 0, "assets/images/title.png");
         add(title);
         super.create();
     }
