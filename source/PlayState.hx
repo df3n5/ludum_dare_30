@@ -16,6 +16,7 @@ enum Level {
 class PlayState extends FlxState {
     var tiledLevel:TiledLevel;
     public var player:Player;
+    public var portals:FlxGroup;
 
     public function new(levelNo:Int, glitched:Bool, died:Bool):Void {
         super();
@@ -36,10 +37,12 @@ class PlayState extends FlxState {
     }
 
     public override function create():Void {
+        portals = new FlxGroup();
         loadLevel(Level.Portal);
     }
 
     override public function update():Void {
         player.update();
+        portals.update();
     }
 }

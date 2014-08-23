@@ -99,6 +99,22 @@ class TiledLevel extends TiledMap {
                 state.add(player);
                 state.player = player;
                 state.add(player.gun);
+            case "gravity":
+                var portal:Portal = new Portal(x, y, Gravity);
+                state.add(portal);
+                state.portals.add(portal);
+            case "reverse":
+                var portal:Portal = new Portal(x, y, Reverse);
+                state.add(portal);
+                state.portals.add(portal);
+            case "strobe":
+                var portal:Portal = new Portal(x, y, Strobe);
+                state.add(portal);
+                state.portals.add(portal);
+            case "wall":
+                var portal:Portal = new Portal(x, y, Wall);
+                state.add(portal);
+                state.portals.add(portal);
                 /*
                 var bunker:FlxSprite = new FlxSprite(x, y, "assets/images/bunker.png");
                 bunker.immovable = true;
