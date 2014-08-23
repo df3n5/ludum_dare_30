@@ -15,7 +15,7 @@ enum PortalType {
 
 class Portal extends FlxSprite {
     var tween:ColorTween;
-    var type:PortalType;
+    public var type:PortalType;
 
     public function new(x, y, type:PortalType) {
         super(x, y);

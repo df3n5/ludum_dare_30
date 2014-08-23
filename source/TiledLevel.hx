@@ -24,6 +24,7 @@ class TiledLevel extends TiledMap {
 	public var foregroundTiles:FlxGroup;
 	public var backgroundTiles:FlxGroup;
 	public var collidableTileLayers:Array<FlxTilemap>;
+	public var collidableKillTileLayers:Array<FlxTilemap>;
 	
 	public function new(tiledLevel:Dynamic) {
 		super(tiledLevel);
@@ -61,15 +62,22 @@ class TiledLevel extends TiledMap {
 			tilemap.heightInTiles = height;
 			tilemap.loadMap(tileLayer.tileArray, processedPath, tileSet.tileWidth, tileSet.tileHeight, 0, 1, 1, 1);
 			
-			if (tileLayer.properties.contains("nocollide")) {
-				backgroundTiles.add(tilemap);
-			} else {
+			if (tileLayer.properties.contains("collide")) {
 				if (collidableTileLayers == null) {
 					collidableTileLayers = new Array<FlxTilemap>();
                 }
 				
 				foregroundTiles.add(tilemap);
 				collidableTileLayers.push(tilemap);
+            } else if (tileLayer.properties.contains("collidekill")) {
+				if (collidableKillTileLayers == null) {
+					collidableKillTileLayers = new Array<FlxTilemap>();
+                }
+				
+				foregroundTiles.add(tilemap);
+				collidableKillTileLayers.push(tilemap);
+			} else {
+				backgroundTiles.add(tilemap);
 			}
 		}
 	}
@@ -100,9 +108,11 @@ class TiledLevel extends TiledMap {
                 state.player = player;
                 state.add(player.gun);
             case "gravity":
-                var portal:Portal = new Portal(x, y, Gravity);
-                state.add(portal);
-                state.portals.add(portal);
+                if(!PlayState.letterMGot) {
+                    var portal:Portal = new Portal(x, y, Gravity);
+                    state.add(portal);
+                    state.portals.add(portal);
+                }
             case "reverse":
                 var portal:Portal = new Portal(x, y, Reverse);
                 state.add(portal);
@@ -115,6 +125,18 @@ class TiledLevel extends TiledMap {
                 var portal:Portal = new Portal(x, y, Wall);
                 state.add(portal);
                 state.portals.add(portal);
+            case "letter_m":
+                var letter:Letter = new Letter(x, y, LM);
+                state.add(letter);
+                state.letters.add(letter);
+            case "east":
+                var gravity:Gravity = new Gravity(x, y, GEast);
+                state.add(gravity);
+                state.gravitys.add(gravity);
+            case "south":
+                var gravity:Gravity = new Gravity(x, y, GSouth);
+                state.add(gravity);
+                state.gravitys.add(gravity);
                 /*
                 var bunker:FlxSprite = new FlxSprite(x, y, "assets/images/bunker.png");
                 bunker.immovable = true;
@@ -124,6 +146,17 @@ class TiledLevel extends TiledMap {
                 state.spawnPoints.add(new SpawnPoint(bunker, new FlxPoint(bunker.x+100, bunker.y+100)));
                 */
 		}
+	}
+
+	public function collideKillWithLevel(obj:FlxBasic, ?notifyCallback:FlxObject->FlxObject->Void, ?processCallback:FlxObject->FlxObject->Bool):Bool {
+		if (collidableKillTileLayers != null) {
+			for (map in collidableKillTileLayers) {
+				// IMPORTANT: Always collide the map with objects, not the other way around. 
+				//			  This prevents odd collision errors (collision separation code off by 1 px).
+				return FlxG.overlap(map, obj, notifyCallback, processCallback != null ? processCallback : FlxObject.separate);
+			}
+		}
+		return false;
 	}
 	
 	public function collideWithLevel(obj:FlxBasic, ?notifyCallback:FlxObject->FlxObject->Void, ?processCallback:FlxObject->FlxObject->Bool):Bool {

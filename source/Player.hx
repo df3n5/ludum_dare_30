@@ -1,23 +1,34 @@
+package;
 import flixel.FlxG;
 import flixel.util.FlxPoint;
 import flixel.FlxSprite;
 
 class Player extends FlxSprite {
     public var gun:FlxSprite;
+    public var gravity:Gravity;
 
     public function new(x, y) {
         super(x, y, "assets/images/player.png");
+        scale.set(0.3, 0.3);
+        updateHitbox();
         this.x -= this.width/2;
         this.y -= this.height/2;
-        this.gun = new FlxSprite(x, y, "assets/images/gun.png");
+
+        //this.offset.x += this.width*0.25;
+        //this.width *=0.25;
+
+        this.gun = new FlxSprite(this.x, this.y, "assets/images/gun.png");
+        this.gun.scale.set(0.3, 0.3);
+        this.gun.updateHitbox();
+        this.gravity = null;
     }
 
     override public function update():Void {
         super.update();
         gun.x = x;
         gun.y = y;
-        drag.x = drag.y = 200.0;
-        var speed : Float = 180;
+        //drag.x = drag.y = 200.0;
+        var speed : Float = 170;
         var moving : Bool = false;
         velocity.x = velocity.y = 0;
         if(FlxG.keys.anyPressed(["S"])) {
@@ -33,6 +44,15 @@ class Player extends FlxSprite {
         } else if(FlxG.keys.anyPressed(["D"])) {
             velocity.x = speed;
             moving = true;
+        }
+        var GRAVITY_CHANGE = 150.0;
+        if(gravity != null) {
+            switch(gravity.type) {
+                case GSouth:
+                    velocity.y += GRAVITY_CHANGE;
+                case GEast:
+                    velocity.x += GRAVITY_CHANGE;
+            }
         }
 
         var angle = Math.atan2(FlxG.mouse.y - (y+(height/2)), FlxG.mouse.x - (x+(width/2)));

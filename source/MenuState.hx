@@ -19,7 +19,7 @@ class MenuState extends FlxState {
     override public function update():Void {
         super.update();
         if(FlxG.keys.justPressed.SPACE) {
-            FlxG.switchState(new PlayState(0, true, true));
+            FlxG.switchState(new PlayState(PortalL));
         }
     }
 }
