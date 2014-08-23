@@ -18,7 +18,7 @@ enum Level {
 }
 
 class PlayState extends FlxState {
-    var bulletSpeed:Float = 400.0;
+    var bulletSpeed:Float = 230.0;
     var tiledLevel:TiledLevel;
     public var player:Player;
     public var portals:FlxGroup;
@@ -27,6 +27,7 @@ class PlayState extends FlxState {
     var level:Level;
     public var bullets:FlxGroup;
     public static var letterMGot = false;
+    public static var letterAGot = false;
 
     public function new(level:Level):Void {
         super();
@@ -48,7 +49,8 @@ class PlayState extends FlxState {
             case Level.GravityL:
                 loadTiledLevel("assets/tiled/gravity.tmx");
             case Level.ReverseL:
-                throw "No Level defined";
+                loadTiledLevel("assets/tiled/reverse.tmx");
+                player.reversed = true;
             case Level.StrobeL:
                 throw "No Level defined";
             case Level.WallL:
@@ -127,6 +129,8 @@ class PlayState extends FlxState {
         switch(letter.type) {
             case LM:
                 letterMGot = true;
+            case LA:
+                letterAGot = true;
         }
         FlxG.switchState(new PlayState(PortalL));
     }

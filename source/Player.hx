@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 class Player extends FlxSprite {
     public var gun:FlxSprite;
     public var gravity:Gravity;
+    public var reversed:Bool;
 
     public function new(x, y) {
         super(x, y, "assets/images/player.png");
@@ -21,6 +22,7 @@ class Player extends FlxSprite {
         this.gun.scale.set(0.3, 0.3);
         this.gun.updateHitbox();
         this.gravity = null;
+        reversed = false;
     }
 
     override public function update():Void {
@@ -28,7 +30,7 @@ class Player extends FlxSprite {
         gun.x = x;
         gun.y = y;
         //drag.x = drag.y = 200.0;
-        var speed : Float = 170;
+        var speed : Float = 85;
         var moving : Bool = false;
         velocity.x = velocity.y = 0;
         if(FlxG.keys.anyPressed(["S"])) {
@@ -45,7 +47,8 @@ class Player extends FlxSprite {
             velocity.x = speed;
             moving = true;
         }
-        var GRAVITY_CHANGE = 150.0;
+        //var GRAVITY_CHANGE = 150.0;
+        var GRAVITY_CHANGE = 75.0;
         if(gravity != null) {
             switch(gravity.type) {
                 case GSouth:
@@ -54,8 +57,19 @@ class Player extends FlxSprite {
                     velocity.x += GRAVITY_CHANGE;
             }
         }
+        if(reversed) {
+            /*
+            velocity.x *= 0.5;
+            velocity.y *= 0.5;
+            */
+            velocity.x = - velocity.x;
+            velocity.y = - velocity.y;
+        }
 
         var angle = Math.atan2(FlxG.mouse.y - (y+(height/2)), FlxG.mouse.x - (x+(width/2)));
+        if(reversed) {
+            angle += Math.PI;
+        }
         var degrees = angle * 180/Math.PI;
         gun.angle = degrees;
     }

@@ -114,9 +114,11 @@ class TiledLevel extends TiledMap {
                     state.portals.add(portal);
                 }
             case "reverse":
-                var portal:Portal = new Portal(x, y, Reverse);
-                state.add(portal);
-                state.portals.add(portal);
+                if(!PlayState.letterAGot) {
+                    var portal:Portal = new Portal(x, y, Reverse);
+                    state.add(portal);
+                    state.portals.add(portal);
+                }
             case "strobe":
                 var portal:Portal = new Portal(x, y, Strobe);
                 state.add(portal);
@@ -127,6 +129,10 @@ class TiledLevel extends TiledMap {
                 state.portals.add(portal);
             case "letter_m":
                 var letter:Letter = new Letter(x, y, LM);
+                state.add(letter);
+                state.letters.add(letter);
+            case "letter_a":
+                var letter:Letter = new Letter(x, y, LA);
                 state.add(letter);
                 state.letters.add(letter);
             case "east":

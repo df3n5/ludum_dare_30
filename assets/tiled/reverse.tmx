@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="14" height="14" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="background" tilewidth="32" tileheight="32">
+  <image source="tilesheet.png" width="640" height="480"/>
+ </tileset>
+ <layer name="background" width="14" height="14">
+  <properties>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYCAfMGHB2ORINQeXflLNRGcTYyY2fbR0JyG3I/NxmUusOC5ziXEPMeGJKyyw6SNEE4ojQvaSCwDteACb
+  </data>
+ </layer>
+ <layer name="death_layer" width="14" height="14">
+  <properties>
+   <property name="collidekill" value="true"/>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKAuEIVifGKiaBibGcTagwsTMhOXO/HZQwt3YgsXbPYS41Z87sVnDqlhSYx7CIUZIRoXIMZeSgAAlGQFgA==
+  </data>
+ </layer>
+ <layer name="collidable" width="14" height="14">
+  <properties>
+   <property name="collide" value="true"/>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwTY2BgECMTkwpG9Y3qo6c+cjAA5BoEeQ==
+  </data>
+ </layer>
+ <objectgroup name="letter" width="14" height="14">
+  <object type="letter_a" x="32" y="32" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="player" width="14" height="14">
+  <object x="240" y="240" width="13" height="15"/>
+ </objectgroup>
+</map>

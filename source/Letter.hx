@@ -8,6 +8,7 @@ import flixel.tweens.FlxTween;
 
 enum LetterType {
     LM;
+    LA;
 }
 
 class Letter extends FlxSprite {
@@ -18,6 +19,8 @@ class Letter extends FlxSprite {
         switch(type) {
             case LM:
                 loadGraphic("assets/images/letter_m.png");
+            case LA:
+                loadGraphic("assets/images/letter_a.png");
         }
     }
 }
