@@ -26,12 +26,10 @@ class Boss extends FlxSprite {
     }
 
     public function hitWall() {
-        trace("hitWall");
     }
 
     override public function update():Void {
         super.update();
-        trace("y " + y);
         if(y > 200) {
             velocity.y = -speed;
         }

@@ -136,6 +136,9 @@ class TiledLevel extends TiledMap {
                 state.add(portal);
                 state.portals.add(portal);
                 state.exit = portal;
+            case "bat_emitter":
+                var batE:BatEmitter = new BatEmitter(x, y, state);
+                state.add(batE);
             case "boss_portal":
                 /*
                 if(PlayState.letterMGot && 

@@ -35,6 +35,7 @@ class PlayState extends FlxState {
     public var deathWalls:FlxGroup;
     public var bosses:FlxGroup;
     public var enBullets:FlxGroup;
+    public var bats:FlxGroup;
     var level:Level;
     public var exit: Portal;
     public var bullets:FlxGroup;
@@ -98,6 +99,7 @@ class PlayState extends FlxState {
         deathWalls = new FlxGroup();
         bosses = new FlxGroup();
         enBullets = new FlxGroup();
+        bats = new FlxGroup();
         add(gravitys);
         add(portals);
         add(bullets);
@@ -116,8 +118,10 @@ class PlayState extends FlxState {
         letters.update();
         bosses.update();
         deathWalls.update();
+        bats.update();
         FlxG.collide(player, portals, playerPortalCollide);
         FlxG.overlap(bullets, gravitys, bulletGravityCollide);
+        FlxG.overlap(bullets, bats, bulletBatCollide);
         FlxG.overlap(bullets, bosses, bulletBossCollide);
         FlxG.overlap(player, letters, playerLetterCollide);
         FlxG.collide(player, deathWalls);
@@ -127,6 +131,8 @@ class PlayState extends FlxState {
         tiledLevel.collideKillWithLevel(player, playerLevelCollide);
         tiledLevel.collideWithLevel(player);
         tiledLevel.collideWithLevel(bullets, levelBulletCollide);
+        tiledLevel.collideWithLevel(bats);
+        FlxG.collide(bats, player, batsPlayerCollide);
         if(FlxG.mouse.justPressed) {
             fireGun();
         }
@@ -174,7 +180,7 @@ class PlayState extends FlxState {
         //var boss:Boss = cast(obj1);
         if((obj0.y - obj1.y) < 0) { //Should be from behind
             boss.hit();
-            if(boss.hits > 10) {
+            if(boss.hits > 30) {
                 boss.kill();
                 exit.revive();
                 FlxG.cameras.shake();
@@ -195,6 +201,10 @@ class PlayState extends FlxState {
         player.gravity = gravity;
     }
 
+    function bulletBatCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        obj0.kill();
+        obj1.kill();
+    }
 
     function playerLetterCollide(obj0:FlxObject, obj1:FlxObject):Void {
         var letter:Letter = cast(obj1);
@@ -222,6 +232,10 @@ class PlayState extends FlxState {
     }
 
     function playerBossCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        FlxG.switchState(new PlayState(this.level));
+    }
+
+    function batsPlayerCollide(obj0:FlxObject, obj1:FlxObject):Void {
         FlxG.switchState(new PlayState(this.level));
     }
 

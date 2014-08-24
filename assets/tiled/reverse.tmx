@@ -35,4 +35,10 @@
  <objectgroup name="player" width="14" height="14">
   <object x="240" y="240" width="13" height="15"/>
  </objectgroup>
+ <objectgroup name="bat_emitter" width="14" height="14">
+  <object x="320" y="192" width="32" height="32"/>
+  <object x="160" y="192" width="32" height="32"/>
+  <object x="128" y="352" width="32" height="32"/>
+  <object x="256" y="96" width="32" height="32"/>
+ </objectgroup>
 </map>
