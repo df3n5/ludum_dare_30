@@ -11,6 +11,8 @@ import flixel.tile.FlxTilemap;
 import flixel.tweens.misc.ColorTween;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+import flixel.effects.particles.FlxEmitter;
+import flixel.effects.particles.FlxParticle;
 
 enum Level {
     PortalL;
@@ -34,6 +36,7 @@ class PlayState extends FlxState {
     public var bosses:FlxGroup;
     public var enBullets:FlxGroup;
     var level:Level;
+    public var exit: Portal;
     public var bullets:FlxGroup;
     public static var letterMGot = false;
     public static var letterAGot = false;
@@ -74,6 +77,7 @@ class PlayState extends FlxState {
             case Level.BossL:
                 loadTiledLevel("assets/tiled/boss_0.tmx");
                 new FlxTimer(1.0, bossFire, 1);
+                exit.kill();
             case Level.CreditsL:
                 //loadTiledLevel("assets/tiled/credits.tmx");
                 tiledLevel = new TiledLevel("assets/tiled/credits.tmx");
@@ -170,9 +174,10 @@ class PlayState extends FlxState {
         //var boss:Boss = cast(obj1);
         if((obj0.y - obj1.y) < 0) { //Should be from behind
             boss.hit();
-            if(boss.hits > 30) {
+            if(boss.hits > 10) {
                 boss.kill();
-                //TODO: Do something here.
+                exit.revive();
+                FlxG.cameras.shake();
             }
         }
         obj0.kill();
@@ -221,8 +226,10 @@ class PlayState extends FlxState {
     }
 
     function bossFire(timer:FlxTimer):Void {
-        bossFireGun();
-        new FlxTimer(1.0, bossFire, 1);
+        if(boss.alive) {
+            bossFireGun();
+            new FlxTimer(1.0, bossFire, 1);
+        }
     }
 
     function bossFireGun():Void {
