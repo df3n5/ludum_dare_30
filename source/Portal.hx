@@ -11,6 +11,7 @@ enum PortalType {
     Reverse;
     Strobe;
     Wall;
+    BossP;
 }
 
 class Portal extends FlxSprite {
@@ -33,6 +34,8 @@ class Portal extends FlxSprite {
                 tween = FlxTween.color(this, 1.0, 0x09ff00, 0x000000, 1, 1, { type: FlxTween.PINGPONG});
             case Wall:
                 tween = FlxTween.color(this, 1.0, 0xff0ff0, 0x000000, 1, 1, { type: FlxTween.PINGPONG});
+            case BossP:
+                tween = FlxTween.color(this, 1.0, 0xedf600, 0xff0000, 1, 1, { type: FlxTween.PINGPONG});
         }
         this.type = type;
         //tween.loopDelay = 2.0;

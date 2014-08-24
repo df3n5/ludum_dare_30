@@ -10,6 +10,7 @@ import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
 import flixel.tweens.misc.ColorTween;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
 
 enum Level {
     PortalL;
@@ -17,16 +18,20 @@ enum Level {
     ReverseL;
     StrobeL;
     WallL;
+    BossL;
 }
 
 class PlayState extends FlxState {
     var bulletSpeed:Float = 230.0;
     var tiledLevel:TiledLevel;
     public var player:Player;
+    public var boss:Boss;
     public var portals:FlxGroup;
     public var gravitys:FlxGroup;
     public var letters:FlxGroup;
     public var deathWalls:FlxGroup;
+    public var bosses:FlxGroup;
+    public var enBullets:FlxGroup;
     var level:Level;
     public var bullets:FlxGroup;
     public static var letterMGot = false;
@@ -65,6 +70,9 @@ class PlayState extends FlxState {
                 crazyStrobeTween = FlxTween.color(1.0, 0xff0ff0, 0x000000, 0, 1, { type: FlxTween.PINGPONG});
             case Level.WallL:
                 loadTiledLevel("assets/tiled/wall.tmx");
+            case Level.BossL:
+                loadTiledLevel("assets/tiled/boss_0.tmx");
+                new FlxTimer(1.0, bossFire, 1);
         }
     }
 
@@ -74,24 +82,31 @@ class PlayState extends FlxState {
         bullets = new FlxGroup();
         letters = new FlxGroup();
         deathWalls = new FlxGroup();
+        bosses = new FlxGroup();
+        enBullets = new FlxGroup();
         add(gravitys);
         add(portals);
         add(bullets);
         loadLevel(level);
         //FlxG.camera.color = 0xFF0000;
         //FlxG.camera.alpha = 0.5;
+
     }
 
     override public function update():Void {
         player.update();
         portals.update();
         bullets.update();
+        enBullets.update();
         letters.update();
+        bosses.update();
         deathWalls.update();
         FlxG.collide(player, portals, playerPortalCollide);
         FlxG.overlap(bullets, gravitys, bulletGravityCollide);
+        FlxG.overlap(bullets, bosses, bulletBossCollide);
         FlxG.overlap(player, letters, playerLetterCollide);
         FlxG.collide(player, deathWalls);
+        FlxG.overlap(enBullets, player, enBulletPlayerCollide);
         tiledLevel.collideKillWithLevel(player, playerLevelCollide);
         tiledLevel.collideWithLevel(player);
         tiledLevel.collideWithLevel(bullets, levelBulletCollide);
@@ -127,10 +142,21 @@ class PlayState extends FlxState {
                 FlxG.switchState(new PlayState(StrobeL));
             case Wall:
                 FlxG.switchState(new PlayState(WallL));
+            case BossP:
+                FlxG.switchState(new PlayState(BossL));
         }
     }
 
     function playerLevelCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        FlxG.switchState(new PlayState(this.level));
+    }
+
+    function bulletBossCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        obj0.kill();
+        boss.hit();
+    }
+
+    function enBulletPlayerCollide(obj0:FlxObject, obj1:FlxObject):Void {
         FlxG.switchState(new PlayState(this.level));
     }
 
@@ -162,6 +188,24 @@ class PlayState extends FlxState {
     function levelBulletCollide(obj0:FlxObject, obj1:FlxObject):Void {
         obj1.kill();
     }
+
+
+    function bossFire(timer:FlxTimer):Void {
+        bossFireGun();
+        new FlxTimer(1.0, bossFire, 1);
+    }
+
+
+    function bossFireGun():Void {
+        var angle = Math.atan2(player.y - (boss.y+(boss.height/2)), player.x - (boss.x+(boss.width/2)));
+        var bulletSpeed = 300.0;
+        var bullet = new FlxSprite(boss.x + boss.width/2, boss.y + boss.height/2, "assets/images/bullet.png");
+        bullet.velocity.x = Math.cos(angle)*bulletSpeed;
+        bullet.velocity.y = Math.sin(angle)*bulletSpeed;
+        enBullets.add(bullet);
+        add(bullet);
+    }
+
 
     private function pixelPerfectProcess(obj0:FlxObject, obj1:FlxObject):Bool {
         var sprite0:FlxSprite = cast(obj0, FlxSprite);

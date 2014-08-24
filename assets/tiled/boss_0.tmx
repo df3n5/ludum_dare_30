@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="14" height="14" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="background" tilewidth="32" tileheight="32">
+  <image source="tilesheet.png" width="640" height="480"/>
+ </tileset>
+ <layer name="background" width="14" height="14">
+  <properties>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYCAfsJCIR/WN6qOnPnIAAHm9AkE=
+  </data>
+ </layer>
+ <layer name="death_layer" width="14" height="14">
+  <properties>
+   <property name="collidekill" value="true"/>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUwAAAAxAAAQ==
+  </data>
+ </layer>
+ <layer name="collidable" width="14" height="14">
+  <properties>
+   <property name="collide" value="true"/>
+   <property name="tileset" value="background"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwTY2BgECMTkwpG9Y3qo6c+cjAA5BoEeQ==
+  </data>
+ </layer>
+ <objectgroup name="player" width="14" height="14">
+  <object x="208" y="400" width="7" height="6"/>
+ </objectgroup>
+ <objectgroup name="boss" width="14" height="14">
+  <object x="160" y="96" width="32" height="32"/>
+ </objectgroup>
+</map>

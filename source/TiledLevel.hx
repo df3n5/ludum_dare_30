@@ -131,6 +131,17 @@ class TiledLevel extends TiledMap {
                     state.add(portal);
                     state.portals.add(portal);
                 }
+            case "boss_portal":
+                /*
+                if(PlayState.letterMGot && 
+                        PlayState.letterAGot && 
+                        PlayState.letterSGot && 
+                        PlayState.letterTGot) {
+                        */
+                    var portal:Portal = new Portal(x, y, BossP);
+                    state.add(portal);
+                    state.portals.add(portal);
+                //}
             case "letter_m":
                 var letter:Letter = new Letter(x, y, LM);
                 state.add(letter);
@@ -159,6 +170,11 @@ class TiledLevel extends TiledMap {
                 var gravity:Gravity = new Gravity(x, y, GSouth);
                 state.add(gravity);
                 state.gravitys.add(gravity);
+            case "boss":
+                var boss:Boss = new Boss(x, y);
+                state.add(boss);
+                state.boss = boss;
+                state.bosses.add(boss);
                 /*
                 var bunker:FlxSprite = new FlxSprite(x, y, "assets/images/bunker.png");
                 bunker.immovable = true;
