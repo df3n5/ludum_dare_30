@@ -107,6 +107,7 @@ class PlayState extends FlxState {
         FlxG.overlap(player, letters, playerLetterCollide);
         FlxG.collide(player, deathWalls);
         FlxG.overlap(enBullets, player, enBulletPlayerCollide);
+        FlxG.overlap(player, bosses, playerBossCollide);
         tiledLevel.collideKillWithLevel(player, playerLevelCollide);
         tiledLevel.collideWithLevel(player);
         tiledLevel.collideWithLevel(bullets, levelBulletCollide);
@@ -152,8 +153,12 @@ class PlayState extends FlxState {
     }
 
     function bulletBossCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        trace("HO " + (obj0.y - obj1.y));
+        //var boss:Boss = cast(obj1);
+        if((obj0.y - obj1.y) < 0) {
+            boss.hit();
+        }
         obj0.kill();
-        boss.hit();
     }
 
     function enBulletPlayerCollide(obj0:FlxObject, obj1:FlxObject):Void {
@@ -189,12 +194,14 @@ class PlayState extends FlxState {
         obj1.kill();
     }
 
+    function playerBossCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        FlxG.switchState(new PlayState(this.level));
+    }
 
     function bossFire(timer:FlxTimer):Void {
         bossFireGun();
         new FlxTimer(1.0, bossFire, 1);
     }
-
 
     function bossFireGun():Void {
         var angle = Math.atan2(player.y - (boss.y+(boss.height/2)), player.x - (boss.x+(boss.width/2)));
