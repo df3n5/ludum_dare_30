@@ -19,6 +19,7 @@ enum Level {
     StrobeL;
     WallL;
     BossL;
+    CreditsL;
 }
 
 class PlayState extends FlxState {
@@ -73,6 +74,15 @@ class PlayState extends FlxState {
             case Level.BossL:
                 loadTiledLevel("assets/tiled/boss_0.tmx");
                 new FlxTimer(1.0, bossFire, 1);
+            case Level.CreditsL:
+                //loadTiledLevel("assets/tiled/credits.tmx");
+                tiledLevel = new TiledLevel("assets/tiled/credits.tmx");
+                // Add tilemaps
+                add(tiledLevel.foregroundTiles);
+                add(tiledLevel.backgroundTiles);
+                var credits = new FlxSprite("assets/images/credits.png");
+                add(credits);
+                tiledLevel.loadObjects(this);
         }
     }
 
@@ -87,6 +97,7 @@ class PlayState extends FlxState {
         add(gravitys);
         add(portals);
         add(bullets);
+        add(bosses);
         loadLevel(level);
         //FlxG.camera.color = 0xFF0000;
         //FlxG.camera.alpha = 0.5;
@@ -108,6 +119,7 @@ class PlayState extends FlxState {
         FlxG.collide(player, deathWalls);
         FlxG.overlap(enBullets, player, enBulletPlayerCollide);
         FlxG.overlap(player, bosses, playerBossCollide);
+        tiledLevel.collideWithLevel(bosses, levelBossesCollide);
         tiledLevel.collideKillWithLevel(player, playerLevelCollide);
         tiledLevel.collideWithLevel(player);
         tiledLevel.collideWithLevel(bullets, levelBulletCollide);
@@ -145,6 +157,8 @@ class PlayState extends FlxState {
                 FlxG.switchState(new PlayState(WallL));
             case BossP:
                 FlxG.switchState(new PlayState(BossL));
+            case Exit:
+                FlxG.switchState(new PlayState(CreditsL));
         }
     }
 
@@ -153,10 +167,13 @@ class PlayState extends FlxState {
     }
 
     function bulletBossCollide(obj0:FlxObject, obj1:FlxObject):Void {
-        trace("HO " + (obj0.y - obj1.y));
         //var boss:Boss = cast(obj1);
-        if((obj0.y - obj1.y) < 0) {
+        if((obj0.y - obj1.y) < 0) { //Should be from behind
             boss.hit();
+            if(boss.hits > 30) {
+                boss.kill();
+                //TODO: Do something here.
+            }
         }
         obj0.kill();
     }
@@ -192,6 +209,11 @@ class PlayState extends FlxState {
 
     function levelBulletCollide(obj0:FlxObject, obj1:FlxObject):Void {
         obj1.kill();
+    }
+
+    function levelBossesCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        var boss:Boss = cast(obj1);
+        boss.hitWall();
     }
 
     function playerBossCollide(obj0:FlxObject, obj1:FlxObject):Void {
