@@ -8,7 +8,7 @@
    <property name="tileset" value="background"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYCAfMGHB2ORINQeXflLNRGcTYyY2fbR0JyG3I/NxmUusOC5ziXEPMeGJKyyw6SNEE4ojQvaSCwDteACb
+   eJxjYCAfsGDB+MTJNQObWmLchs8OfJhYM6jhTmzuRtdHjDsp0YfLDcTYRyjeiY0HbPK4/EdMHJALAGDOAZk=
   </data>
  </layer>
  <layer name="death_layer" width="14" height="14">
@@ -17,7 +17,7 @@
    <property name="tileset" value="background"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKAuEIVifGKiaBibGcTagwsTMhOXO/HZQwt3YgsXbPYS41Z87sVnDqlhSYx7CIUZIRoXIMZeSgAAlGQFgA==
+   eJxjYKAuECVCXBQJk2IGuhp8mFqA1u5EDxds+shxLyn6qBF2lIY5sfrR1RHikwoAxfMDcw==
   </data>
  </layer>
  <layer name="collidable" width="14" height="14">
@@ -33,12 +33,6 @@
   <object type="letter_a" x="32" y="32" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="player" width="14" height="14">
-  <object x="240" y="240" width="13" height="15"/>
- </objectgroup>
- <objectgroup name="bat_emitter" width="14" height="14">
-  <object x="320" y="192" width="32" height="32"/>
-  <object x="160" y="192" width="32" height="32"/>
-  <object x="128" y="352" width="32" height="32"/>
-  <object x="256" y="96" width="32" height="32"/>
+  <object x="336" y="304" width="13" height="15"/>
  </objectgroup>
 </map>

@@ -12,6 +12,7 @@ class Player extends FlxSprite {
         super(x, y, "assets/images/player.png");
         scale.set(0.3, 0.3);
         updateHitbox();
+
         this.x -= this.width/2;
         this.y -= this.height/2;
 
@@ -21,6 +22,7 @@ class Player extends FlxSprite {
         this.gun = new FlxSprite(this.x, this.y, "assets/images/gun.png");
         this.gun.scale.set(0.3, 0.3);
         this.gun.updateHitbox();
+
         this.gravity = null;
         reversed = false;
     }
@@ -55,6 +57,8 @@ class Player extends FlxSprite {
                     velocity.y += GRAVITY_CHANGE;
                 case GEast:
                     velocity.x += GRAVITY_CHANGE;
+                case GWest:
+                    velocity.x -= GRAVITY_CHANGE;
             }
         }
         if(reversed) {

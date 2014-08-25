@@ -23,7 +23,7 @@
    <property name="tileset" value="background"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYCAfiFKoT5QITKx9hPQRK0+sffj0EQK00EeO/7DpIyYeiHEfuWmDFLMpcSsuAAD9uQVW
+   eJxjYKA/EEWiCWFs+nCZSUgfPnls4oTAYNJHyP/E6iMmHohxH6l+I9VsSt2KCwAAc0EFLA==
   </data>
  </layer>
  <layer name="collidable" width="14" height="14">
@@ -32,16 +32,18 @@
    <property name="tileset" value="background"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwTY2BgECMTkwoGoz5WAvpY8WB62EesPmz2UOJObGCg9GHzAzYxdH3kYABzNQTY
+   eJwTY2BgECMTszKQBmD6SAXU0IfLrdjEkf2HD5PjTkL6cNlBqn2UuhMbGCh95KYzcjAAlC0E4g==
   </data>
  </layer>
  <objectgroup name="gravity_switch" width="14" height="14">
   <object type="east" x="352" y="288" width="32" height="32"/>
-  <object type="south" x="32" y="160" width="32" height="32"/>
-  <object type="east" x="320" y="96" width="32" height="32"/>
+  <object type="south" x="32" y="128" width="32" height="32"/>
+  <object type="east" x="256" y="96" width="32" height="32"/>
+  <object type="west" x="352" y="64" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="bat_emitter" width="14" height="14">
   <object x="96" y="288" width="32" height="32"/>
   <object x="192" y="64" width="32" height="32"/>
+  <object x="160" y="128" width="32" height="32"/>
  </objectgroup>
 </map>

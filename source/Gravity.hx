@@ -9,6 +9,7 @@ import flixel.tweens.FlxTween;
 enum GravityType {
     GEast;
     GSouth;
+    GWest;
 }
 
 class Gravity extends FlxSprite {
@@ -19,6 +20,8 @@ class Gravity extends FlxSprite {
         switch(type) {
             case GEast:
                 loadGraphic("assets/images/cross_east.png");
+            case GWest:
+                loadGraphic("assets/images/cross_west.png");
             case GSouth:
                 loadGraphic("assets/images/cross_south.png");
         }

@@ -66,19 +66,28 @@ class PlayState extends FlxState {
                 loadTiledLevel("assets/tiled/portal.tmx");
             case Level.GravityL:
                 loadTiledLevel("assets/tiled/gravity.tmx");
+                player.gravity = new Gravity(0,0, GSouth);
+                FlxG.sound.play("portal");
             case Level.ReverseL:
                 loadTiledLevel("assets/tiled/reverse.tmx");
                 player.reversed = true;
+                FlxG.sound.play("portal");
             case Level.StrobeL:
                 loadTiledLevel("assets/tiled/strobe.tmx");
                 crazyStrobe = true;
-                crazyStrobeTween = FlxTween.color(1.0, 0xff0ff0, 0x000000, 0, 1, { type: FlxTween.PINGPONG});
+                crazyStrobeTween = FlxTween.color(1.0, 0x999999, 0x000000, 0, 1, { type: FlxTween.PINGPONG});
+                FlxG.sound.play("portal");
             case Level.WallL:
                 loadTiledLevel("assets/tiled/wall.tmx");
+                var deathWall:DeathWall = new DeathWall(0, 0);
+                add(deathWall);
+                deathWalls.add(deathWall);
+                FlxG.sound.play("portal");
             case Level.BossL:
                 loadTiledLevel("assets/tiled/boss_0.tmx");
                 new FlxTimer(1.0, bossFire, 1);
                 exit.kill();
+                FlxG.sound.play("portal");
             case Level.CreditsL:
                 //loadTiledLevel("assets/tiled/credits.tmx");
                 tiledLevel = new TiledLevel("assets/tiled/credits.tmx");
@@ -88,6 +97,7 @@ class PlayState extends FlxState {
                 var credits = new FlxSprite("assets/images/credits.png");
                 add(credits);
                 tiledLevel.loadObjects(this);
+                FlxG.sound.play("portal");
         }
     }
 
@@ -105,6 +115,7 @@ class PlayState extends FlxState {
         add(bullets);
         add(bosses);
         loadLevel(level);
+
         //FlxG.camera.color = 0xFF0000;
         //FlxG.camera.alpha = 0.5;
 
@@ -139,6 +150,10 @@ class PlayState extends FlxState {
         if(crazyStrobeTween != null) {
             FlxG.camera.color = crazyStrobeTween.color;
 //            FlxG.camera.alpha = crazyStrobeTween.alpha;
+        }
+
+        if(FlxG.keys.anyPressed(["P"])) {
+            FlxG.switchState(new PlayState(PortalL));
         }
     }
 
@@ -184,6 +199,9 @@ class PlayState extends FlxState {
                 boss.kill();
                 exit.revive();
                 FlxG.cameras.shake();
+                FlxG.sound.play("boss_kill");
+            } else {
+                FlxG.sound.play("boss_hit");
             }
         }
         obj0.kill();
@@ -194,6 +212,7 @@ class PlayState extends FlxState {
     }
 
     function bulletGravityCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        FlxG.sound.play("switch");
         obj0.kill();
         var gravity:Gravity = cast(obj1);
         //var GRAVITY_ACCEL = 900.8;
@@ -202,6 +221,7 @@ class PlayState extends FlxState {
     }
 
     function bulletBatCollide(obj0:FlxObject, obj1:FlxObject):Void {
+        FlxG.sound.play("kill_bat");
         obj0.kill();
         obj1.kill();
     }

@@ -170,10 +170,16 @@ class TiledLevel extends TiledMap {
                 var gravity:Gravity = new Gravity(x, y, GEast);
                 state.add(gravity);
                 state.gravitys.add(gravity);
+            case "west":
+                var gravity:Gravity = new Gravity(x, y, GWest);
+                state.add(gravity);
+                state.gravitys.add(gravity);
+                /*
             case "death_wall":
                 var deathWall:DeathWall = new DeathWall(x, y);
                 state.add(deathWall);
                 state.deathWalls.add(deathWall);
+                */
             case "south":
                 var gravity:Gravity = new Gravity(x, y, GSouth);
                 state.add(gravity);
